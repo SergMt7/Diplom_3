@@ -1,4 +1,4 @@
-package pagesTest;
+package pagestest;
 
 import io.qameta.allure.junit4.DisplayName;
 import static org.junit.Assert.assertEquals;
@@ -12,9 +12,9 @@ import pages.HomePage;
 public class ConstructorTest {
     private WebDriver driver;
     private String expectedTextConstructorTitle = "Соберите бургер";
-    private String expectedTextBunsTitle = "Булки";
-    private String expectedTextSaucesTitle = "Соусы";
-    private String expectedTextFillingsTitle = "Начинки";
+    private String expectedTextBuns = "Булки";
+    private String expectedTextSauces = "Соусы";
+    private String expectedTextFillings = "Начинки";
 
     @Before
     public void setUp() {
@@ -49,8 +49,8 @@ public class ConstructorTest {
     public void successJumpToBuns() {
         HomePage homePage = new HomePage(driver);
         homePage.clickBunsButton();
-        String actualTextBunsTitle = homePage.getTextBuns();
-        assertEquals("Не корректный результат", expectedTextBunsTitle, actualTextBunsTitle);
+        String actualResult = driver.findElement(homePage.getResultSection()).getText();
+        assertEquals("Не корректный результат", expectedTextBuns, actualResult);
     }
 
     @Test
@@ -58,8 +58,8 @@ public class ConstructorTest {
     public void successJumpToSauces() {
         HomePage homePage = new HomePage(driver);
         homePage.clickSaucesButton();
-        String actualTextSaucesTitle = homePage.getTextSauces();
-        assertEquals("Не корректный результат", expectedTextSaucesTitle, actualTextSaucesTitle);
+        String actualResult = driver.findElement(homePage.getResultSection()).getText();
+        assertEquals("Не корректный результат", expectedTextSauces, actualResult);
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ConstructorTest {
     public void successJumpToFillings() {
         HomePage homePage = new HomePage(driver);
         homePage.clickFillingsButton();
-        String actualTextFillingsTitle = homePage.getTextFillings();
-        assertEquals("Не корректный результат", expectedTextFillingsTitle, actualTextFillingsTitle);
+        String actualResult = driver.findElement(homePage.getResultSection()).getText();
+        assertEquals("Не корректный результат", expectedTextFillings, actualResult);
     }
 
     @After

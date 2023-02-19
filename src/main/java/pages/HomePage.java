@@ -2,10 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class HomePage {
@@ -38,13 +36,13 @@ public class HomePage {
     public By passwordEnter = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[2]/div/div/input"); //локатор поля ввода пароля в форме Ввод
     public By enterButtonFormLogin = By.xpath("//*[@id=\"root\"]/div/main/div/form/button"); //локатор кнопки Войти внизу формы Вход на странице логина
     public By exitButton = By.xpath("//*[@id=\"root\"]/div/main/div/nav/ul/li[3]/button"); //локатор кнопки Выход в разделе Личный кабинет
-    public By textExitButtonTitle = By.xpath("//*[text()='Выход']"); //локатор заголовка формы Вход
-    public By bunsButton = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[1]/div[1]"); //локатор кнопки Булки в разделе "Соберите бургер" на главной странице
-    public By saucesButton = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[1]/div[2]"); //локатор кнопки Соусы в разделе "Соберите бургер" на главной странице
-    public By fillingsButton = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[1]/div[3]"); //локатор кнопки Начинки в разделе "Соберите бургер" на главной странице
-    public By textBuns = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[2]/h2[1]"); //локатор заголовка раздела Булки
-    public By textSauces = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[2]/h2[2]"); //локатор заголовка раздела Соусы
-    public By textFillings = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div[2]/h2[3]"); //локатор заголовка раздела Начинки
+    public By textExitButtonTitle = By.xpath("//*[text()='Выход']"); //локатор кнопки Выход
+    private final By sectionBunsButton = By.xpath(".//span[text()='Булки']"); //локатор кнопки раздела Булки
+    private final By sectionSaucesButton = By.xpath(".//span[text()='Соусы']"); //локатор кнопки раздела Соусы
+    private final By sectionFillingsButton = By.xpath(".//span[text()='Булки']"); //локатор кнопки раздела Начинки
+    public By textCreateOrder = By.xpath("//*[text()='Оформить заказ']");
+    private By resultSection = By.xpath("//div[contains(@class,'tab_tab_type_current__2BEPc')]//span"); //локатор выбранной секции
+
     public void standBy(By element) { //Ожидание элемента
         (new WebDriverWait(driver, Duration.ofSeconds(3)))
                 .until(ExpectedConditions.elementToBeClickable(element));
@@ -107,29 +105,30 @@ public class HomePage {
     }
     public void clickEnterButtonFormLogin() { //метод клика Войти в форме Ввод на станице логина
         driver.findElement(enterButtonFormLogin).click();
+        standBy(textCreateOrder);
     }
     public void clickExitButton() { //метод клика Выход в разделе Личный кабинет с ожидание перехода на страницу формы Вход
         standBy(textExitButtonTitle);
         driver.findElement(exitButton).click();
         standBy(textEnterFormTitle);
     }
-    public void clickBunsButton() {
-        driver.findElement(bunsButton);
+    public void clickBunsButton() { //метод клика по кнопке раздела Булки
+        driver.findElement(sectionBunsButton);
+        new WebDriverWait(driver, Duration.ofSeconds(1));
     }
-    public void clickSaucesButton() {
-        driver.findElement(saucesButton);
+    public void clickSaucesButton() { //метод клика по кнопке раздела Соусы
+        driver.findElement(sectionSaucesButton);
+        new WebDriverWait(driver, Duration.ofSeconds(1));
     }
-    public void clickFillingsButton() {
-        driver.findElement(fillingsButton);
-    }
-    public String getTextBuns() { //метод возврата заголовка раздела "Булки"
-        return driver.findElement(textBuns).getText();
-    }
-    public String getTextSauces() { //метод возврата заголовка раздела "Соусы"
-        return driver.findElement(textSauces).getText();
-    }
-    public String getTextFillings() { //метод возврата заголовка раздела "Начинки"
-        return driver.findElement(textFillings).getText();
+    public void clickFillingsButton() { //метод клика по кнопке раздела Начинки
+        driver.findElement(sectionFillingsButton);
+        new WebDriverWait(driver, Duration.ofSeconds(1));
     }
 
+    public String getTextCreateOrder() { //метод возврата названия кнопки Оформить заказ
+        return driver.findElement(textCreateOrder).getText();
+    }
+    public By getResultSection() { //метод возврата выбранного раздела
+        return resultSection;
+    }
 }
