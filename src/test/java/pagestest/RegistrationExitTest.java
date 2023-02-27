@@ -49,7 +49,7 @@ public class RegistrationExitTest {
         login.setEmail(email);
         login.setPassword(password);
         ValidatableResponse responseLogin = userClient.login(login);
-        if (accessToken != null) {
+        if (responseLogin.extract().statusCode() == 200) {
             accessToken = responseLogin.extract().path("accessToken").toString();
         }
 
